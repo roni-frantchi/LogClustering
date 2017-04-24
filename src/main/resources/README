@@ -1,0 +1,26 @@
+Complexity:
+let N be the number of lines and W the number of word in the longest line and C the number of clusters.
+than the complexity is O(NWC)
+to reduce that complexity:
+
+1. i could split the clusters into 2 groups one that "settled" its indexes and one that still having index=0
+ and than we can first run in parallel over the the settled ones since there is no risk of collision.
+ and only if we found no matches to run sequentially over the clusters that still have index = 0.
+ since most of culsters should be settled than we could get O(NW)
+
+2. to reduce W by hashing the whole sentence without parsing the new log line, just removing the different word and
+comparing hashes. this is implemented by HashCluster resulting in O(NC).
+
+3. so if i added also 1 than we would get O(N) witch is pretty awesome!!
+
+
+for scaling this:
+ we could just create a method that returns all clusters keys and indexes and performing the check in the client side.
+if he matches any of the keys just update the cluster. if none matched we need to check the "fresh clusters" one by one still we can do that
+in the clint side. and if none of them matched we create a new cluster.
+
+to avoid creating the same cluster twice we can monitor the number of clusters in the data base
+level and before creating a new one
+ make sure that the number of clusters didnt change.
+
+
